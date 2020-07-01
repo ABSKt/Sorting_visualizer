@@ -3,12 +3,12 @@
     left: 200px;
     height :660px;
     width: 1100px;
-    background-color: turquoise;
+    background-color: whitesmoke;
     padding:30px;
 }
 
 .array-bar {
-    width: 20px;
+    width: 25px;
     background-color: blue;
     display: inline-block;
     margin: 0 1px;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as BubbleSort from './bubbleSort';
+import * as InsertionSort from './insertionSort';
 import './app.css'
 export default class App extends Component {
     constructor(props) {
@@ -13,8 +14,9 @@ export default class App extends Component {
         this.resetArray();
     }
 
-    bubbleSort(){
+    bubbleSort = () =>{
         const animations = BubbleSort.Bubblesort(this.state.array);
+        document.getElementsByClassName("button").disabled = true;
         const newAnimations = [];
         const newAnimationsSwap = [];
         for(let i=0; i<animations.comparison.length; i++){
@@ -31,7 +33,7 @@ export default class App extends Component {
             setTimeout(() => {
                 barOneStyle.backgroundColor = "red";
                 barTwoStyle.backgroundColor = "red";
-              }, i * 100);
+              }, i * 80);
             const [swapOneIdx, swapTwoIdx, bigHeight, smallHeight] = newAnimationsSwap[i]
             if(swapOneIdx != swapTwoIdx){
                 setTimeout( () => { 
@@ -40,19 +42,48 @@ export default class App extends Component {
                 arrayBars[swapOneIdx].style.backgroundColor = "blue"
                 arrayBars[swapTwoIdx].style.backgroundColor = "blue";
 
-                }, (i+1)*100);
+                }, (i+1)*80);
             }
             else{
                 setTimeout(()=>{
                     barOneStyle.backgroundColor = "blue";
                     barTwoStyle.backgroundColor = "blue";
-                }, (i+1)*100);
+                }, (i+1)*80);
             }
         }
     }
 
     insertionSort(){
+        // this.setState({
+        //     array : InsertionSort.InsertionSort(this.state.array),
+        // })
+        const animations = InsertionSort.InsertionSort(this.state.array);
+        const newAnimations =[];
+        const newAnimationsSwap = [];
+        for(let i=0; i<animations.comparison.length; i++){
+            newAnimations.push(animations.comparison[i]);
+        }
+        for(let i=0;i<animations.swap.length; i++){
+            newAnimationsSwap.push(animations.swap[i]);
+        }
+        const arrayBars = document.getElementsByClassName('array-bar');
+        for(let i=0; i<newAnimations.length; i++){
+            const [barOneIdx, barTwoIdx] = newAnimations[i];
+            const barOneStyle = arrayBars[barOneIdx].style;
+            const barTwoStyle = arrayBars[barTwoIdx].style;
+            setTimeout(() => {
+                barOneStyle.backgroundColor = "red";
+                barTwoStyle.backgroundColor = "red";
+              }, i * 80);
+            const [swapOneIdx, swapTwoIdx, bigHeight, smallHeight] = newAnimationsSwap[i]
+            setTimeout( () => { 
+                barTwoStyle.height = smallHeight +'px';
+                barOneStyle.height = bigHeight+'px';
+                arrayBars[swapOneIdx].style.backgroundColor = "blue"
+                arrayBars[swapTwoIdx].style.backgroundColor = "blue";
 
+                }, (i+1)*80);
+        }
     }
 
     selectionSort(){
@@ -69,7 +100,7 @@ export default class App extends Component {
 
     resetArray = () => {
         const array = [];
-        for(let i=0;i<50; i++){
+        for(let i=0;i<40; i++){
             array.push(randomNumberFromInterval(5,650));
         }
         this.setState({array});
@@ -89,12 +120,12 @@ export default class App extends Component {
                 ))}
             </div>
             <div className="button-container">
-               <button onClick = {() => this.resetArray()}>Generate new Array</button>
-               <button onClick = {() => this.bubbleSort()}>Bubble Sort</button>
-               <button onClick = {() => this.insertionSort()}>Insertion Sort</button>
-               <button onClick = {() => this.selectionSort()}>Selection Sort</button>
-               <button onClick = {() => this.quickSort()}>Quick Sort</button>
-               <button onClick = {() => this.mergeSort()}>Merge Sort</button>
+               <button className = "button" onClick = {() => this.resetArray() }>Generate new Array</button>
+               <button className = "button" onClick = {() => this.bubbleSort()}>Bubble Sort</button>
+               <button className = "button" onClick = {() => this.insertionSort()}>Insertion Sort</button>
+               <button className = "button" onClick = {() => this.selectionSort()}>Selection Sort</button>
+               <button className = "button" onClick = {() => this.quickSort()}>Quick Sort</button>
+               <button className = "button" onClick = {() => this.mergeSort()}>Merge Sort</button>
             </div>
             </div>
         );
